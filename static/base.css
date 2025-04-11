@@ -1,0 +1,27 @@
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.main-content {
+  flex: 1;
+  display: flex;
+}
+.sidebar {
+  width: 250px;
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-right: 1px solid #dee2e6;
+}
+.profile-pic {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+footer {
+  background-color: #f1f1f1;
+  padding: 1rem;
+  text-align: center;
+}

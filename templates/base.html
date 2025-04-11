@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}My eCommerce{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{% static 'Soko/base.css' %}">
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+  <nav class="bg-white shadow-md py-4 px-6 flex justify-between items-center">
+    <div class="flex items-center space-x-2">
+      <img src="{% static 'images/logo.png' %}" alt="Logo" class="w-8 h-8">
+      <span class="font-bold text-xl">MyShop</span>
+    </div>
+    <div class="space-x-3">
+      <a href="{% url 'home' %}" class="text-blue-600 hover:underline">Home</a>
+      <a href="{% url 'login' %}" class="text-green-600 hover:underline">Sign In</a>
+      <a href="{% url 'register' %}" class="text-yellow-600 hover:underline">Sign Up</a>
+    </div>
+  </nav>
+
+  <div class="flex min-h-screen">
+    
+    <aside class="w-64 bg-white shadow-lg p-6 hidden md:block">
+      <h5 class="text-lg font-semibold mb-4">User Profile</h5>
+      {% if user.is_authenticated %}
+        <img src="{{ user.profile.photo.url|default_if_none:'#' }}" alt="Profile Photo" class="w-24 h-24 rounded-full object-cover mb-4">
+        <p><strong>Name:</strong> {{ user.username }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+      {% else %}
+        <p>Please log in to view profile info.</p>
+      {% endif %}
+    </aside>
+
+  
+    <main class="flex-1 p-6">
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+
+  <footer class="bg-gray-800 text-white text-center py-4">
+    &copy; 2025 MyShop. All rights reserved.
+  </footer>
+
+</body>
+</html>
