@@ -18,24 +18,24 @@ from django.shortcuts import get_object_or_404
 
 @csrf_exempt
 def c2b_validation(request):
-    print("✅ Validation Triggered")
+    print("Validation Triggered")
 
     if request.method != "POST":
         return JsonResponse({"error": "Only POST allowed"}, status=405)
 
     try:
         body_unicode = request.body.decode('utf-8')
-        print("📦 Raw Validation Body:", repr(body_unicode))
+        print("Raw Validation Body:", repr(body_unicode))
 
         if not body_unicode.strip():
-            print("❗ Empty body in validation")
+            print("Empty body in validation")
             return JsonResponse({"ResultCode": 0, "ResultDesc": "Accepted - No content"})
 
         data = json.loads(body_unicode)
-        print("✅ Parsed Validation Data:", data)
+        print(" Parsed Validation Data:", data)
 
     except json.JSONDecodeError as e:
-        print("❌ JSONDecodeError in validation:", str(e))
+        print(" JSONDecodeError in validation:", str(e))
         return JsonResponse({"ResultCode": 0, "ResultDesc": "Accepted - Invalid JSON"}, status=200)
 
     return JsonResponse({"ResultCode": 0, "ResultDesc": "Accepted"})
@@ -71,9 +71,9 @@ def c2b_confirmation(request):
   
 @csrf_exempt
 def simulate_payment(request):
-    print("🚀 simulate_payment called")
+    print(" simulate_payment called")
     access_token = get_mpesa_access_token()
-    print("🔑 token:", access_token)
+    print(" token:", access_token)
 
     # Payload
     payload = {
@@ -116,7 +116,7 @@ def lipa_na_mpesa_online(request, product_id):
     if request.method =="POST":
        ## data = json.loads(request.body)
         user = request.user
-        phone_number = user.profile.phone_number
+        phone_number = user.phone_number
 
         product = get_object_or_404(Product, pk=product_id)
         amount = int(product.price)
@@ -158,21 +158,21 @@ def lipa_na_mpesa_online(request, product_id):
 
 @csrf_exempt
 def stk_callback(request):
-    print("📲 STK Callback Triggered")
+    print(" STK Callback Triggered")
 
     raw_body = request.body.decode('utf-8')
-    print(f"📦 Raw STK Body: {raw_body!r}")
+    print(f" Raw STK Body: {raw_body!r}")
 
     if not raw_body:
-        print("❗ Empty body in STK callback")
+        print(" Empty body in STK callback")
         return HttpResponseBadRequest("Empty body")
 
     try:
         data = json.loads(raw_body)
-        print(f"✅ Parsed JSON: {json.dumps(data, indent=2)}")
+        print(f" Parsed JSON: {json.dumps(data, indent=2)}")
     except json.JSONDecodeError as e:
-        print(f"❌ JSON Decode Error: {e}")
+        print(f" JSON Decode Error: {e}")
         return HttpResponseBadRequest("Invalid JSON")
 
-    # Here you'd typically save the data
+   
     return JsonResponse({"ResultCode": 0, "ResultDesc": "Accepted"})

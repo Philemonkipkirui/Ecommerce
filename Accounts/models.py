@@ -10,7 +10,7 @@ class CustomUser(AbstractUser):
         ('buyer', 'Buyer'),
         ('business', 'Business'),
     )
-    phone_number = models.CharField(max_length=15, null=True, blank=True)
+    phone_number = models.CharField(max_length=15, unique = True)
 
     user_type = models.CharField(max_length= 10, choices = USER_TYPE_CHOICES)
 
